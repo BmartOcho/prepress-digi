@@ -18,10 +18,14 @@ def run_illustrator_script_with_file(ai_file_path):
     # Use ExtendScript Toolkit or Visual Studio Code ExtendScript Runner
     # This path is for the legacy ExtendScript Toolkit
     # Update this if you're using VSCode + ExtendScript Debugger
-    estk_path = r'"C:\Program Files (x86)\Adobe\ExtendScript Toolkit CC\ExtendScript Toolkit.exe"'
+    # estk_path = r'"C:\Program Files (x86)\Adobe\ExtendScript Toolkit CC\ExtendScript Toolkit.exe"'
 
     try:
-        subprocess.run([estk_path, temp_script_path], check=True)
+        subprocess.run([
+            "C:\\Program Files (x86)\\Adobe\\ExtendScript Toolkit CC\\ExtendScript Toolkit.exe",
+            temp_script_path
+        ], check=True)
+
         print("Script sent to Illustrator successfully.")
     except Exception as e:
         print("Failed to send script to Illustrator:", e)
