@@ -1,5 +1,6 @@
 import os
 import subprocess
+from config import ILLUSTRATOR_EXE  # ✅ You need to import this or define it here
 
 def run_illustrator_script_with_file(ai_file_path):
     jsx_template_path = os.path.join("Scripts", "run_this.jsx")
@@ -9,23 +10,17 @@ def run_illustrator_script_with_file(ai_file_path):
     with open(jsx_template_path, "r") as file:
         jsx_code = file.read()
 
+    # Replace [[FILE_PATH]] with escaped path (e.g., C:\\Users\\...)
     jsx_code = jsx_code.replace("[[FILE_PATH]]", ai_file_path.replace("\\", "\\\\"))
 
-    # Save to temp_run.jsx
+    # Save the injected script as temp_run.jsx
     with open(temp_script_path, "w") as file:
         file.write(jsx_code)
 
-    # Use ExtendScript Toolkit or Visual Studio Code ExtendScript Runner
-    # This path is for the legacy ExtendScript Toolkit
-    # Update this if you're using VSCode + ExtendScript Debugger
-    # estk_path = r'"C:\Program Files (x86)\Adobe\ExtendScript Toolkit CC\ExtendScript Toolkit.exe"'
-
     try:
-        subprocess.run([
-            "C:\\Program Files (x86)\\Adobe\\ExtendScript Toolkit CC\\ExtendScript Toolkit.exe",
-            temp_script_path
-        ], check=True)
+        # Open the file in Illustrator (so user can manually run the script via File > Scripts)
+        subprocess.run([ILLUSTRATOR_EXE, ai_file_path], check=True)
 
-        print("Script sent to Illustrator successfully.")
+        print("Illustrator opened the file. Run 'File > Scripts > run_this' inside Illustrator to complete automation.")
     except Exception as e:
-        print("Failed to send script to Illustrator:", e)
+        print("Failed to open file in Illustrator:", e)
