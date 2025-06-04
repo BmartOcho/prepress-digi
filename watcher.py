@@ -1,10 +1,9 @@
 import os
-import subprocess
-import shutil
 import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from config import WATCH_FOLDER, SCRIPT_TEMPLATE, TEMP_SCRIPT, PROGRAM_MAP
+from config import WATCH_FOLDER, PROGRAM_MAP
+from bridge_runner import run_illustrator_script_with_file
 
 class PrepressHandler(FileSystemEventHandler):
     def on_created(self, event):
@@ -15,23 +14,10 @@ class PrepressHandler(FileSystemEventHandler):
 
             if ext in PROGRAM_MAP:
                 print(f"New file detected: {file_path}")
-
                 try:
-                    # Copy the Illustrator JSX script to the trigger location
-                    os.makedirs(os.path.dirname(TEMP_SCRIPT), exist_ok=True)
-                    shutil.copyfile(SCRIPT_TEMPLATE, TEMP_SCRIPT)
-                    print("Script copied to Illustrator trigger folder.")
-
-                    # Open file using system default (assumes associations are set)
-                    subprocess.run(['start', '', file_path], shell=True)
-
-                    # Clean up after delay (optional but recommended)
-                    time.sleep(10)
-                    os.remove(TEMP_SCRIPT)
-                    print("Trigger script removed.")
-
+                    run_illustrator_script_with_file(file_path)
                 except Exception as e:
-                    print("Error during automation:", e)
+                    print(f"Error processing file {file_path}: {e}")
 
 def start_watcher():
     event_handler = PrepressHandler()
