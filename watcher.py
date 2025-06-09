@@ -5,6 +5,7 @@ from watchdog.events import FileSystemEventHandler
 from config import WATCH_FOLDER, PROGRAM_MAP
 from bridge_runner import run_illustrator_script_with_file
 
+
 class PrepressHandler(FileSystemEventHandler):
     def on_created(self, event):
         if not event.is_directory:
@@ -18,6 +19,7 @@ class PrepressHandler(FileSystemEventHandler):
                     run_illustrator_script_with_file(file_path)
                 except Exception as e:
                     print(f"Error processing file {file_path}: {e}")
+
 
 def start_watcher():
     event_handler = PrepressHandler()
