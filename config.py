@@ -10,7 +10,9 @@ SCRIPT_TEMPLATE = os.path.join(os.getcwd(), "Scripts", "check_and_export.jsx")
 TEMP_SCRIPT = os.path.expandvars(r"%APPDATA%\Roaming\Adobe\Illustrator Script Runner\run_this.jsx")
 
 # Adobe app you want to trigger
-ILLUSTRATOR_EXE = r'"C:\Program Files\Adobe\Adobe Illustrator 2025\Support Files\Contents\Windows\Illustrator.exe"'
+# Provide the raw path without surrounding quotes so ``subprocess`` can
+# receive it directly.
+ILLUSTRATOR_EXE = r"C:\Program Files\Adobe\Adobe Illustrator 2025\Support Files\Contents\Windows\Illustrator.exe"
 
 # File types and apps
 PROGRAM_MAP = {

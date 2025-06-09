@@ -1,6 +1,7 @@
 import os
 import subprocess
-from config import ILLUSTRATOR_EXE  # ✅ You need to import this or define it here
+# Import the Illustrator executable path as a raw string
+from config import ILLUSTRATOR_EXE
 
 def run_illustrator_script_with_file(ai_file_path):
     jsx_template_path = os.path.join("Scripts", "run_this.jsx")
@@ -19,6 +20,7 @@ def run_illustrator_script_with_file(ai_file_path):
 
     try:
         # Open the file in Illustrator (so user can manually run the script via File > Scripts)
+        # Pass the executable path directly without extra quoting
         subprocess.run([ILLUSTRATOR_EXE, ai_file_path], check=True)
 
         print("Illustrator opened the file. Run 'File > Scripts > run_this' inside Illustrator to complete automation.")
