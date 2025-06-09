@@ -18,9 +18,8 @@ def run_illustrator_script_with_file(ai_file_path):
         file.write(jsx_code)
 
     try:
-        # Open the file in Illustrator (so user can manually run the script via File > Scripts)
-        subprocess.run([ILLUSTRATOR_EXE, ai_file_path], check=True)
-
-        print("Illustrator opened the file. Run 'File > Scripts > run_this' inside Illustrator to complete automation.")
+        # Launch Illustrator and execute the generated script directly
+        subprocess.run([ILLUSTRATOR_EXE, "-cmd", temp_script_path], check=True)
+        print("Illustrator executed the script automatically.")
     except Exception as e:
-        print("Failed to open file in Illustrator:", e)
+        print("Failed to run Illustrator script:", e)
